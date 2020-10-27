@@ -1,7 +1,9 @@
 //tag::all[]
 //tag::allButValidation[]
 package lbrys;
+
 import lombok.Data;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +39,7 @@ public class Order {
     //end::allButValidation[]
 
     //tag::allButValidation[]
+    @CreditCardNumber(message="Not a valid credit card number")
     private String ccNumber;
     //end::allButValidation[]
 

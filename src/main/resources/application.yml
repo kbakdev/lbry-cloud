@@ -1,0 +1,27 @@
+#spring:
+#  security:
+#    user:
+#      name: buzz
+#      password: infinity
+
+lbry:
+  orders:
+    pageSize: 10
+
+
+  discount:
+    codes:
+      abcdef: 10
+
+---
+spring:
+  profiles: prod
+
+  datasource:
+    url: jdbc:mysql://localhost/lbrycloud
+    username: lbryuser
+    password: lbrypassword
+
+logging:
+  level:
+    lbrys: WARN

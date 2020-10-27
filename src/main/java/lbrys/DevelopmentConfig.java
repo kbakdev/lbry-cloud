@@ -34,7 +34,7 @@ public class DevelopmentConfig {
 
                 userRepo.save(new User("53jk1", encoder.encode("password"),
                         "Sejki Nixtr", "1 Warsaw", "Main Road", "PL",
-                        "12345", "123-123-1234"));
+                        "76227", "123-123-1234"));
             }
         };
     }

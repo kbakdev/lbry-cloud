@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>LBRY Cloud</title>
-    </head>
+<head>
+    <title>LBRY Cloud</title>
+</head>
 
-    <body>
-    <center>
-    <h1>Welcome to...</h1>
-    <img th:src="@{/images/lbry.png}"/>
-        <h2><a href="design" th:href="@{/design}"><button>Design your LBRY</button></a></h2>
-    </center>
-    </body>
+<body>
+<h1>Welcome to...</h1>
+<img th:src="@{/images/lbry.png}"/>
+<form method="POST" th:action="@{/logout}" id="logoutForm">
+    <input type="submit" value="Logout"/>
+</form>
+
+<a th:href="@{/design}" id="design">Design a LBRY</a>
+</body>
 </html>

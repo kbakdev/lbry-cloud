@@ -1,23 +1,21 @@
 package lbrys.web;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.validation.Errors;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
 import lbrys.Ingredient;
 import lbrys.Ingredient.Type;
 import lbrys.Lbry;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -25,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/design")
 public class DesignLbryController {
 
-    @GetMapping
-    public String showDesignForm(Model model) {
+    @ModelAttribute
+    public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "wheat", Type.WRAP),
                 new Ingredient("COTO", "maize", Type.WRAP),
@@ -45,13 +43,43 @@ public class DesignLbryController {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
+    }
+
+    //tag::showDesignForm[]
+    @GetMapping
+    public String showDesignForm(Model model) {
         model.addAttribute("design", new Lbry());
         return "design";
     }
 
-    private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
-        return ingredients.stream()
+//end::showDesignForm[]
+
+    //tag::processDesignValidated[]
+    @PostMapping
+    public String processDesign(@Valid @ModelAttribute("design") Lbry design, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            return "design";
+        }
+
+        // Save the taco design...
+        // We'll do this in chapter 3
+        log.info("Processing design: " + design);
+
+        return "redirect:/orders/current";
+    }
+
+//end::processDesignValidated[]
+
+    //tag::filterByType[]
+    private List<Ingredient> filterByType(
+            List<Ingredient> ingredients, Type type) {
+        return ingredients
+                .stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
     }
+
+//end::filterByType[]
+// tag::foot[]
 }
+// end::foot[]
